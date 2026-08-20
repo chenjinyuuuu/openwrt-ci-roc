@@ -9,6 +9,10 @@ on:
       repo_branch:
         required: true
         type: string
+      repo_commit:
+        required: false
+        type: string
+        default: ''
       config_file:
         required: true
         type: string
@@ -115,6 +119,7 @@ jobs:
       env:
         REPO_URL: ${{ inputs.repo_url }}
         REPO_BRANCH: ${{ inputs.repo_branch }}
+        REPO_COMMIT: ${{ inputs.repo_commit }}
         KERNEL_FILE: ${{ inputs.kernel_file }}
       run: |
         df -hT "$GITHUB_WORKSPACE"
@@ -122,6 +127,11 @@ jobs:
         sudo chown -R "$(id -u):$(id -g)" /mnt/openwrt
         git clone --depth 1 -b "$REPO_BRANCH" --single-branch "$REPO_URL" /mnt/openwrt
         cd /mnt/openwrt
+        if [ -n "$REPO_COMMIT" ]; then
+          echo "Pinning source to commit: $REPO_COMMIT"
+          git fetch --depth 1 origin "$REPO_COMMIT"
+          git checkout --detach "$REPO_COMMIT"
+        fi
         echo "OPENWRT_PATH=$PWD" >> "$GITHUB_ENV"
         VERSION_INFO="$(git show -s --date=short --format="作者: %an<br/>时间: %cd<br/>内容: %s<br/>hash: %H")"
         {
