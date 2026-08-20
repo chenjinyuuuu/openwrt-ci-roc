@@ -1,0 +1,29 @@
+name: IPQ60XX-NoWiFi-LibWrt
+
+on:
+  workflow_dispatch:
+  workflow_call:
+  # schedule:
+  #   - cron: "0 18 * * *"
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  Build:
+    uses: ./.github/workflows/Build-OpenWrt.yml
+    permissions:
+      contents: write
+      actions: write
+    with:
+      repo_url: https://github.com/laipeng668/openwrt-6.x.git
+      repo_branch: 25.12-nss
+      config_file: configs/IPQ60XX.NoWiFi.config
+      firmware_tag: IPQ60XX-NoWiFi
+      kernel_file: kernel-6.12
+      artifact_prefix: IPQ60XX-NoWiFi
+      manifest_file: libwrt-qualcommax-ipq60xx.manifest
+      rename_qualcommax_to_nowifi: true
+      release_summary: >-
+        ZN-M2/IPQ60XX NoWiFi 测试固件：保留当前 General.config 中的软件包配置（包括 Dockerman），关闭 ath11k Wi-Fi 驱动与 IPQ6018 固件，用于验证 Dockerman 固件体积与 96M rootfs 分区的关系。
