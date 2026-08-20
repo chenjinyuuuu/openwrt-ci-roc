@@ -19,7 +19,7 @@ jobs:
     with:
       repo_url: https://github.com/laipeng668/openwrt-6.x.git
       repo_branch: 25.12-nss
-      repo_commit: 43f28199d6cfd63fbb8907e15b7e785aea7a3c06
+      repo_commit: eaa5f1755bdcce938c4a01ba269ac39ff4bbfe22
       config_file: configs/IPQ60XX.NoWiFi.config
       firmware_tag: IPQ60XX-NoWiFi
       kernel_file: kernel-6.12
@@ -27,4 +27,4 @@ jobs:
       manifest_file: libwrt-qualcommax-ipq60xx.manifest
       rename_qualcommax_to_nowifi: true
       release_summary: >-
-        ZN-M2/IPQ60XX NoWiFi 测试固件：保留当前 General.config 中的软件包配置（包括 Dockerman），关闭 ath11k Wi-Fi 驱动与 IPQ6018 固件，用于验证 Dockerman 固件体积与 96M rootfs 分区的关系。源码临时固定在 43f28199d6cfd63fbb8907e15b7e785aea7a3c06，以避开后续 FG2000/Aquantia 补丁更新对本次单变量测试的干扰。
+        ZN-M2/IPQ60XX NoWiFi 测试固件：保留当前 General.config 中的软件包配置（包括 Dockerman），关闭 ath11k Wi-Fi 驱动与 IPQ6018 固件，用于验证 Dockerman 固件体积与 96M rootfs 分区的关系。源码临时固定在 eaa5f1755bdcce938c4a01ba269ac39ff4bbfe22，与上一轮 Dockerman + WiFi 成功构建使用的 LibWrt 源码保持一致，用于进行单变量 NoWiFi 测试。
